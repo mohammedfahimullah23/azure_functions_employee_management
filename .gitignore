@@ -1,0 +1,46 @@
+# =========================
+# Java
+# =========================
+*.class
+*.log
+
+# =========================
+# Maven
+# =========================
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# =========================
+# IDEs
+# =========================
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Azure Functions
+# =========================
+local.settings.json
+.azure/
+bin/
+obj/
+
+# =========================
+# Spring Boot
+# =========================
+application-local.yml
+application-dev.yml
+
+# =========================
+# Environment / Secrets
+# =========================
+.env
+.env.*
