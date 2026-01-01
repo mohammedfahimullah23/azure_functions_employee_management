@@ -58,7 +58,11 @@ public class ProcessEmployeeFunction {
 
         } catch (Exception e) {
             context.getLogger().severe("DB error: " + e.getMessage());
+            context.getLogger().severe(e.toString());
 
+            for (StackTraceElement ste : e.getStackTrace()) {
+                context.getLogger().severe(ste.toString());
+            }
             return request.createResponseBuilder(HttpStatus.INTERNAL_SERVER_ERROR)
                     .header("Content-Type", "application/json")
                     .body(new ErrorResponse("Failed to save employee"))

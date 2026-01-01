@@ -79,3 +79,43 @@ Steps:
 - Save and restart the Function App
 
 Main app which is consuming this function app is available in https://github.com/mohammedfahimullah23/employeemanagement
+
+Changes
+Accessing via password and username is removed.
+
+Add this below permission to your function app. 
+Enable managed identity to your function app
+
+```
+CREATE USER [azurefunctions-1766754802726] FROM EXTERNAL PROVIDER;
+ALTER ROLE db_datareader ADD MEMBER [azurefunctions-1766754802726];
+ALTER ROLE db_datawriter ADD MEMBER [azurefunctions-1766754802726];
+
+```
+
+Things to keep in mind.
+When you are creating a function in java. The version of the java 
+you are selecting in the stack settings needs to match with the pom.xml sql version
+```
+<dependency>
+<groupId>com.microsoft.sqlserver</groupId>
+<artifactId>mssql-jdbc</artifactId>
+<version>10.2.2.jre17</version>
+<scope>compile</scope>
+</dependency>
+```
+In my stack settings, I have java 17. For the sql server dependency, I am installing jre17 version
+
+Importantly you need to add
+```
+<dependency>
+    <groupId>com.azure</groupId>
+    <artifactId>azure-identity</artifactId>
+    <version>1.18.1</version>
+    <scope>compile</scope>
+</dependency>
+```
+Add this dependency, I was getting this error ClassNotFoundException: ManagedIdentityCredential.
+
+This is needed because we are not using password and username login anymore, we are using managed identity login.
+authentication=ActiveDirectoryManagedIdentity. so internally it has to get a token. This is done with the help of azure-identity package.
